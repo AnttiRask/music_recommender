@@ -3,37 +3,33 @@ library(conflicted)
 library(httr2)
 library(jsonlite)
 library(shiny)
+library(shinyBS)
 library(spotifyr)
 library(tidyverse)
 
 # Source the API keys ----
+source("www/prompt_versions.R")
 source("www/secret.R")
 
 server <- function(input, output, session) {
     
-    # Reactive expression for handling OpenAI API request
+    # OpenAI API request ----
     openai_recommendation <- eventReactive(
         input$go, {
             
-            # Construct the prompt using user inputs
-            prompt_final <- str_glue(
-                "Could you provide a single recommendation for a/an artist/band based on the following prompt: {input$prompt}.
-                Don't necessarily go for the most well known artist/band. Format the answer to have the name of the artist/band
-                on the first line. Then have a line break. Then write a short description of the chosen artist/band and an 
-                explanation why you chose to recommend that particular artist/band."
-            )
+            # Construct the prompt using user inputs ----
+            prompt_final <- str_glue(prompt_ver2)
             
-            # OpenAI API request setup
+            # OpenAI API request setup ----
             url <- "https://api.openai.com/v1/completions"
             body <- list(
                 model       = "gpt-3.5-turbo-instruct",
                 prompt      = prompt_final,
                 n           = 1,
-                # temperature = 0,
+                temperature = 0.5,
                 max_tokens  = 4000
             )
             
-            # Replace '<OPENAI_API_KEY>' with your actual OpenAI API key
             response <- request(url) %>%
                 req_headers(Authorization = str_glue("Bearer {OPENAI_API_KEY}")) %>%
                 req_body_json(body) %>%
@@ -61,12 +57,13 @@ server <- function(input, output, session) {
                     slice(-c(1:2)) %>%
                     pull()
                 
-                result <- list(
+                result_artist <- list(
                     artist = artist_name,
                     info   = artist_info
                 )
-                print(result)  # Temporarily print the result to the console
-                return(result)
+                print("result_artist:")
+                print(result_artist) # Temporarily print the result to the console
+                return(result_artist)
             } else {
                 return(NULL) # Handle errors or unsuccessful requests appropriately
             }
@@ -74,7 +71,24 @@ server <- function(input, output, session) {
         ignoreNULL = TRUE # ignore initial state of NULL
     )
     
-    # Reactive expression for fetching artist details from Spotify
+    # Limit input character count and alert
+    observeEvent(input$prompt, {
+        if(str_length(input$prompt) > 190) {
+            newstring <- str_sub(input$prompt, end = 190)
+            createAlert(
+                session,
+                anchorId = "alert_anchor",
+                title    = "Character Limit Exceeded",
+                content  = "You exceeded the 190 character limit!",
+                dismiss  = TRUE
+            )
+            updateTextInput(session, "prompt", value = newstring)
+        }
+    }, 
+    ignoreInit = TRUE
+    )
+    
+    # Fetching artist details from Spotify
     artist_details <- reactive({
         req(openai_recommendation()) # Ensure this only runs after a successful OpenAI recommendation
         
@@ -85,7 +99,7 @@ server <- function(input, output, session) {
         }
         
         artist_name    <- recommendation$artist
-        artist_info    <- str_c(recommendation$info, collapse = " ") %>% str_squish()
+        artist_info    <- str_c(recommendation$info, collapse = " ") %>% str_replace_all("  ", "<br><br>")
         
         artist_spotify <- search_spotify(
             artist_name,
@@ -98,37 +112,39 @@ server <- function(input, output, session) {
         )
         
         if (!is.null(artist_spotify) && length(artist_spotify$images) > 0) {
-            list(
+            
+            result_spotify <- list(
                 followers  = artist_spotify %>% pull(followers.total),
                 imageUrl   = artist_spotify %>% pluck("images", 1) %>% slice_head(n = 1) %>% pull(url),
                 info       = artist_info,
                 name       = artist_spotify %>% pull(name),
                 spotifyUrl = artist_spotify %>% pull(external_urls.spotify)
             )
+            print("result_spotify:")
+            print(result_spotify) # Temporarily print the result to the console
+            return(result_spotify)
         } else {
             return(NULL) # Handle cases where the artist is not found
         }
     })
     
-    # Displaying the artist's details in the UI
+    # The artist's details
     output$artistInfo <- renderUI({
         details <- artist_details()
         if (is.null(details) || !is.list(details)) {
             return("No data available.")
         }
-        print(details)
         if (!is.null(details)) {
             tagList(
                 img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
                 h3(details$name),
-                h4(details$info),
-                p(paste("Followers:", format(details$followers, big.mark = ","))),
+                HTML(details$info),
+                HTML("<br><br>"),
+                p(paste("Spotify Followers:", format(details$followers, big.mark = ","))),
                 a(href = details$spotifyUrl, "View on Spotify", target = "_blank")
             )
         } else {
             "Artist details not available."
         }
     })
-    
-    # Additional server logic for fetching and displaying top tracks can follow a similar pattern
 }
