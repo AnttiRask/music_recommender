@@ -1,0 +1,28 @@
+#1db954 (green)
+
+lighten-10: #2bde6a;
+lighten-20: #57e589;
+lighten-30: #83eca8;
+lighten-40: #aff3c7;
+
+darken-10: #168d40;
+darken-20: #0f612c;
+darken-30: #083518;
+darken-40: #010904;
+
+
+#191414 (black)
+
+lighten-10: #352b2b;
+lighten-20: #524141;
+lighten-30: #6e5858;
+lighten-40: #8a6f6f;
+darken-10:  #000;
+
+
+#FFFFFF (white)
+
+darken-10: #e6e6e6;
+darken-20: #ccc;
+darken-30: #b3b3b3;
+darken-40: #999;

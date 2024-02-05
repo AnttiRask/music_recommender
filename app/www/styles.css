@@ -3,19 +3,19 @@
 
 body {
     font-family: "Gotham", sans-serif;
-    background-color: #000;
-    color: #white;
+    background-color: #191414;
+    color: #FFFFFF;
 }
 
 h2, .h2 {
     font-family: "Gotham", sans-serif;
     color: #1DB954;
-    font-size: 60px;
+    font-size: 70px;
 }
 
 h3, .h3 {
     font-family: "Gotham", sans-serif;
-    color: #white;
+    color: #FFFFFF;
 }
 
 a {
@@ -26,22 +26,28 @@ a {
 /* Classes */
 
 .artist-card {
-    background-color: #333;
-    padding: 20px;
+    background-color: #191414;
+    /* padding: 20px; */
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-top: 20px;
+    box-shadow: 0 2px 4px #191414;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #1DB954;
+    border-color: #168d40;
 }
 
 .container {
         max-width: 900px;
         margin: auto;
         padding: 20px;
+        margin-top: 20px;
       }
 
 .get-recommendation-button {
     background-color: #1DB954;
-    color: white;
+    color: #FFFFFF;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -49,17 +55,25 @@ a {
 }
 
 .get-recommendation-button:hover {
-    background-color: darken(#1DB954, 10%);
+    background-color: #168d40;
 }
 
 .label {
-    color: #white;
+    color: #FFFFFF;
 }
-    
+
+.sidebar {
+    margin-top: 30px;
 }
 
 .text-prompt {
     margin-bottom: 20px;
+}
+
+.well {
+    background-color: #333;
+}
+    
 }
 
 /* Media */

@@ -1,3 +1,5 @@
+library(dplyr)
+library(shinyBS)
 library(shinycssloaders)
 library(shiny)
 library(shinythemes)
@@ -5,7 +7,6 @@ library(shinythemes)
 ui <- fluidPage(
     
     # Set the theme and custom CSS
-    theme = shinytheme("cyborg"),
     includeCSS("www/styles.css"),
     
     # Application title
@@ -21,22 +22,25 @@ ui <- fluidPage(
             )
         ),
         sidebarLayout(
-            sidebarPanel(
-                textAreaInput(
-                    inputId     = "prompt",
-                    label       = "Text Prompt",
-                    height      = "80px",
-                    placeholder = "Write your music mood...",
-                    resize      = "none"
-                ),
-                actionButton(
-                    inputId = "go",
-                    label   = "Get Recommendation",
-                    class   = "btn btn-success"
-                ),
-                br(),
-                br(),
-                bsAlert("alert_anchor")
+            div(
+                class = "sidebar",
+                sidebarPanel(
+                    textAreaInput(
+                        inputId     = "prompt",
+                        label       = "Text Prompt",
+                        height      = "80px",
+                        placeholder = "Write your music mood...",
+                        resize      = "none"
+                    ),
+                    actionButton(
+                        inputId = "go",
+                        label   = "Get Recommendation",
+                        class   = "btn btn-success"
+                    ),
+                    br(),
+                    br(),
+                    bsAlert("alert_anchor")
+                )
             ),
             mainPanel(
                 div(
