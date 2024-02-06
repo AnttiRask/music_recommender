@@ -1,13 +1,5 @@
 library(rsconnect)
 
-# # GitHub
-# setAccountInfo(
-#     name   = Sys.getenv("SHINY_APPS_NAME"),
-#     token  = Sys.getenv("SHINY_APPS_TOKEN"),
-#     secret = Sys.getenv("SHINY_APPS_SECRET")
-# )
-
-# Locally
 source("app/www/secret.R")
 
 setAccountInfo(
@@ -22,5 +14,3 @@ deployApp(
     account     = "youcanbeapirate",
     forceUpdate = TRUE
 )
-
-rsconnect::setProperty()
