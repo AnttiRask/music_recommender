@@ -6,6 +6,11 @@ library(shinythemes)
 
 ui <- fluidPage(
     
+    tags$head(
+        tags$title("Music Recommender"),
+        tags$link(rel = "shortcut icon", type = "image/png", href = "www/favicon.png")
+    ),
+    
     # Set the theme and custom CSS
     includeCSS("www/styles.css"),
     

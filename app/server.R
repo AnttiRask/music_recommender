@@ -1,11 +1,13 @@
 # Load needed packages ----
 library(conflicted)
+library(dplyr)
 library(httr2)
 library(jsonlite)
+library(purrr)
 library(shiny)
 library(shinyBS)
 library(spotifyr)
-library(tidyverse)
+library(stringr)
 
 # Source the latest prompt version ----
 source("www/prompt_versions.R")
@@ -33,7 +35,7 @@ server <- function(input, output, session) {
             )
             
             response <- request(url) %>%
-                req_headers(Authorization = str_glue("Bearer {Sys.getenv(OPENAI_API_KEY)}")) %>%
+                req_headers(Authorization = str_glue("Bearer {Sys.getenv('OPENAI_API_KEY')}")) %>%
                 req_body_json(body) %>%
                 req_perform()
             
@@ -108,8 +110,8 @@ server <- function(input, output, session) {
             type          = "artist",
             limit         = 1,
             authorization = get_spotify_access_token(
-                client_id     = Sys.getenv(SPOTIFY_CLIENT_ID),
-                client_secret = Sys.getenv(SPOTIFY_CLIENT_SECRET)
+                client_id     = Sys.getenv("SPOTIFY_CLIENT_ID"),
+                client_secret = Sys.getenv("SPOTIFY_CLIENT_SECRET")
             )
         )
         
@@ -159,33 +161,15 @@ server <- function(input, output, session) {
         }
     })
     
-    # Render the Spotify button in the server
-    # output$spotifyButton <- renderUI({
-    #     if (isTruthy(spotify_url())) {  # Check if the spotify_url is available
-    #         actionButton(
-    #             inputId = "view_on_spotify",
-    #             label   = "View on Spotify",
-    #             icon    = icon("spotify", lib = "font-awesome"),
-    #             class   = "button"
-    #         )
-    #     }
-    # })
     output$spotifyButton <- renderUI({
         if (!is.null(spotify_url()) && nzchar(spotify_url())) {
-            tags$a(href = spotify_url(), target = "_blank", class = "button",
-                   tags$button(
-                       "View on Spotify",
-                       class = "button",
-                       icon("spotify", lib = "font-awesome")
-                   )
+            tags$a(
+                href   = spotify_url(),
+                target = "_blank",
+                class = "button",
+                icon("spotify", lib = "font-awesome"),
+                "View on Spotify"
             )
         }
     })
-    
-    # # Add the observeEvent for the button click here
-    # observeEvent(
-    #     input$view_on_spotify, {
-    #         browseURL(spotify_url())
-    #     }
-    # )
 }
