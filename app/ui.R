@@ -22,31 +22,32 @@ ui <- fluidPage(
             )
         ),
         sidebarLayout(
-            div(
-                class = "sidebar",
-                sidebarPanel(
-                    textAreaInput(
-                        inputId     = "prompt",
-                        label       = "Text Prompt",
-                        height      = "80px",
-                        placeholder = "Write your music mood...",
-                        resize      = "none"
-                    ),
-                    actionButton(
-                        inputId = "go",
-                        label   = "Get Recommendation",
-                        class   = "btn btn-success"
-                    ),
-                    br(),
-                    br(),
-                    bsAlert("alert_anchor")
-                )
+            sidebarPanel(
+                textAreaInput(
+                    inputId     = "prompt",
+                    label       = "Text Prompt",
+                    height      = "160px",
+                    placeholder = "What are you in the mood for?",
+                    resize      = "none"
+                ),
+                actionButton(
+                    inputId = "go",
+                    label   = "Get Recommendation",
+                    width   = "100%",
+                    class   = "button"
+                    # class   = "get-recommendation-button"
+                ),
+                br(),
+                br(),
+                bsAlert("alert_anchor")
             ),
             mainPanel(
                 div(
                     class = "artist-card",
                     uiOutput("artistInfo") %>% 
                         withSpinner(color = "#1DB954"),
+                    br(),
+                    uiOutput("spotifyButton")
                 )
             )
         )

@@ -13,6 +13,9 @@ source("www/secret.R")
 
 server <- function(input, output, session) {
     
+    # Reactive value for storing the Spotify URL
+    spotify_url <- reactiveVal(NULL)
+    
     # OpenAI API request ----
     openai_recommendation <- eventReactive(
         input$go, {
@@ -128,8 +131,17 @@ server <- function(input, output, session) {
         }
     })
     
+    # Observe the artist details and update the Spotify URL
+    observe({
+        details <- artist_details()
+        if (!is.null(details) && is.list(details)) {
+            spotify_url(details$spotifyUrl) # Assuming this is where the Spotify URL is stored
+        }
+    })
+    
     # The artist's details
     output$artistInfo <- renderUI({
+        req(artist_details())
         details <- artist_details()
         if (is.null(details) || !is.list(details)) {
             return("No data available.")
@@ -137,14 +149,34 @@ server <- function(input, output, session) {
         if (!is.null(details)) {
             tagList(
                 img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
+                HTML("<br><br>"),
                 h3(details$name),
                 HTML(details$info),
                 HTML("<br><br>"),
-                p(paste("Spotify Followers:", format(details$followers, big.mark = ","))),
-                a(href = details$spotifyUrl, "View on Spotify", target = "_blank")
+                p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
             )
         } else {
             "Artist details not available."
         }
     })
+    
+    # Render the Spotify button in the server
+    output$spotifyButton <- renderUI({
+        if (isTruthy(spotify_url())) {  # Check if the spotify_url is available
+            actionButton(
+                inputId = "view_on_spotify",
+                label   = "View on Spotify",
+                icon    = icon("spotify", lib = "font-awesome"),
+                class   = "button"
+                # class   = "view-on-spotify-button"
+            )
+        }
+    })
+    
+    # Add the observeEvent for the button click here
+    observeEvent(
+        input$view_on_spotify, {
+            browseURL(spotify_url())
+        }
+    )
 }

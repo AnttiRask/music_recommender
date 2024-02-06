@@ -11,11 +11,13 @@ h2, .h2 {
     font-family: "Gotham", sans-serif;
     color: #1DB954;
     font-size: 70px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 h3, .h3 {
     font-family: "Gotham", sans-serif;
-    color: #FFFFFF;
+    color: #1DB954;
 }
 
 a {
@@ -25,17 +27,17 @@ a {
 
 /* Classes */
 
-.artist-card {
-    background-color: #191414;
-    /* padding: 20px; */
-    border-radius: 5px;
-    box-shadow: 0 2px 4px #191414;
+.alert-info {
+    color: #57e589;
+    background-color: #aff3c7;
+    border-color: #83eca8;
 }
 
-.btn-success {
-    color: #fff;
-    background-color: #1DB954;
-    border-color: #168d40;
+.artist-card {
+    background-color: #191919;
+    border-radius: 5px;
+    border: 1px solid #FFFFFF;
+    padding: 20px;
 }
 
 .container {
@@ -45,7 +47,7 @@ a {
         margin-top: 20px;
       }
 
-.get-recommendation-button {
+.button {
     background-color: #1DB954;
     color: #FFFFFF;
     border: none;
@@ -54,26 +56,37 @@ a {
     transition: background-color 0.3s ease;
 }
 
-.get-recommendation-button:hover {
+.button:active {
+    background-color: #1DB954 !important; 
+    border: 1px solid #FFFFFF !important;
+    color: #FFFFFF !important; 
+    box-shadow: 0 0 0 3px #168d40;
+}
+
+.btn:active:focus,
+.btn:focus {
+    outline: none !important;
+}
+
+.button:focus {
     background-color: #168d40;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+.button:hover {
+    background-color: #168d40;
+    color: #FFFFFF;
 }
 
 .label {
     color: #FFFFFF;
 }
 
-.sidebar {
-    margin-top: 30px;
-}
-
-.text-prompt {
-    margin-bottom: 20px;
-}
-
 .well {
-    background-color: #333;
-}
-    
+    background-color: #191919;
+    border-color: #FFFFFF;
+    border-radius: 5px;
 }
 
 /* Media */
@@ -90,6 +103,6 @@ a {
 
 /* Image */
 img {
-    height: 50%;
-    width:  50%; /* Adjust this to control the image size */
+    height: 100%;
+    width:  100%; /* Adjust this to control the image size */
 }
