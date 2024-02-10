@@ -9,7 +9,7 @@ body {
 
 h2, .h2 {
     font-family: "Gotham", sans-serif;
-    color: #1DB954;
+    color: #d94248;
     font-size: 70px;
     margin-bottom: 30px;
     text-align: center;
@@ -17,12 +17,7 @@ h2, .h2 {
 
 h3, .h3 {
     font-family: "Gotham", sans-serif;
-    color: #1DB954;
-}
-
-a {
-    font-family: "Gotham", sans-serif;
-    color: #1DB954;
+    color: #d94248;
 }
 
 a:focus, a:hover {
@@ -32,15 +27,15 @@ a:focus, a:hover {
 /* Classes */
 
 .alert-info {
-    color: #57e589;
-    background-color: #aff3c7;
-    border-color: #83eca8;
+    color: #C1272D;
+    background-color: #ea979a;
+    border-color: #d94248;
 }
 
 .artist-card {
-    background-color: #191919;
+    background-color: #1a1a1a;
     border-radius: 5px;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #e5e5e5;
     padding: 20px;
 }
 
@@ -51,7 +46,67 @@ a:focus, a:hover {
         margin-top: 20px;
       }
 
-.button {
+.btn:active:focus,
+.btn:focus {
+    outline: none !important;
+}
+
+.button-clear {
+    background-color: #B2B2B2;
+    color: #1a1a1a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.button-clear:active {
+    background-color: #B2B2B2 !important; 
+    border: 1px solid #FFFFFF !important;
+    color: #1a1a1a !important; 
+    box-shadow: 0 0 0 3px #B2B2B2;
+}
+
+.button-clear:focus {
+    background-color: #B2B2B2;
+    border: 1px solid #FFFFFF;
+    color: #1a1a1a;
+}
+
+.button-clear:hover {
+    background-color: #cbcbcb;
+    color: #1a1a1a;
+}
+
+.button-recommendation {
+    background-color: #d94248;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button-recommendation:active {
+    background-color: #d94248 !important; 
+    border: 1px solid #FFFFFF !important;
+    color: #FFFFFF !important; 
+    box-shadow: 0 0 0 3px #C1272D;
+}
+
+.button-recommendation:focus {
+    background-color: #d94248;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+.button-recommendation:hover {
+    background-color: #C1272D;
+    color: #FFFFFF;
+}
+
+.button-spotify {
     background-color: #1DB954;
     color: #FFFFFF;
     border: none;
@@ -60,42 +115,33 @@ a:focus, a:hover {
     transition: background-color 0.3s ease;
 }
 
-.button:active {
+.button-spotify:active {
     background-color: #1DB954 !important; 
     border: 1px solid #FFFFFF !important;
     color: #FFFFFF !important; 
     box-shadow: 0 0 0 3px #168d40;
 }
 
-.btn:active:focus,
-.btn:focus {
-    outline: none !important;
-}
-
-.button:focus {
+.button-spotify:focus {
     background-color: #168d40;
     border: 1px solid #FFFFFF;
     color: #FFFFFF;
 }
 
-.button:hover {
+.button-spotify:hover {
     background-color: #168d40;
     color: #FFFFFF;
 }
 
 .form-control:focus {
-    border-color: #1DB954;
+    border-color: #d94248;
     outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px #168d40;
-}
-
-.label {
-    color: #FFFFFF;
+    box-shadow: inset 0 1px 1px #1a1a1a, 0 0 8px #d94248;
 }
 
 .well {
-    background-color: #191919;
-    border-color: #FFFFFF;
+    background-color: #1a1a1a;
+    border-color: #e5e5e5;
     border-radius: 5px;
 }
 

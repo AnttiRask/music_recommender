@@ -100,6 +100,18 @@ server <- function(input, output, session) {
     ignoreInit = TRUE
     )
     
+    # Listener for the Clear text button
+    observeEvent(input$clearBtn, {
+        updateTextAreaInput(
+            session,
+            "prompt",
+            value       = "",
+            placeholder = "Describe to me, in 190 characters or less, what kind of music you would like to hear."
+        )
+    }, 
+    ignoreInit = TRUE
+    )
+    
     # Reactive expression to fetch artist details from Spotify
     artist_details <- reactive({
         # Wait for the OpenAI recommendation to complete
@@ -189,7 +201,7 @@ server <- function(input, output, session) {
             tags$a(
                 href   = spotify_url(),                # The href attribute is the Spotify URL
                 target = "_blank",                     # Opens the link in a new tab
-                class  = "button",                     # Class for CSS styling
+                class  = "button-spotify",                     # Class for CSS styling
                 icon("spotify", lib = "font-awesome"), # Spotify icon from the font-awesome library
                 "View on Spotify"                      # Button text
             )

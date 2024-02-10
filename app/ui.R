@@ -18,7 +18,8 @@ ui <- fluidPage(
     div(
         class = "container",
         # The app title
-        titlePanel(title = list(icon("spotify", lib = "font-awesome" ), "Music Recommender")),
+        # titlePanel(title = list(icon("spotify", lib = "font-awesome" ), "Music Recommender")),
+        titlePanel(title = "Music Recommender"),
         sidebarLayout(
             sidebarPanel(
                 # Text prompt input
@@ -34,7 +35,15 @@ ui <- fluidPage(
                     inputId = "go",
                     label   = "Get Recommendation",
                     width   = "100%",
-                    class   = "button"
+                    class   = "button-recommendation"
+                ),
+                br(),
+                br(),
+                # Button to clear the text area
+                actionButton(
+                    inputId = "clearBtn",
+                    label   = "Clear Text",
+                    class   = "button-clear"
                 ),
                 br(),
                 br(),
@@ -48,7 +57,7 @@ ui <- fluidPage(
                     withSpinner(
                         uiOutput("artistInfo"),
                         type             = 3,
-                        color            = "#1DB954",
+                        color            = "#C1272D",
                         color.background = "#191919"
                     ),
                     br(),

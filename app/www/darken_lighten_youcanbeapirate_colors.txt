@@ -1,0 +1,46 @@
+#c1272d (red)
+
+lighten-10: #d94248;
+lighten-20: #e16d71;
+lighten-30: #ea979a;
+lighten-40: #f3c1c3;
+lighten-50: #fbecec;
+
+darken-10: #971e23;
+darken-20: #6c1619;
+darken-30: #420d0f;
+darken-40: #170505;
+
+
+#B2B2B2 (gray)
+
+lighten-10: #cbcbcb;
+lighten-20: #e5e5e5;
+
+darken-10: #999;
+darken-20: #7f7f7f;
+darken-30: #666;
+darken-40: #4c4c4c;
+darken-50: #323232;
+darken-60: #191919;
+
+
+#000000 (black)
+
+lighten-10: #1a1a1a;
+lighten-20: #333;
+lighten-30: #4d4d4d;
+lighten-40: #666;
+lighten-50: #808080;
+lighten-60: #999;
+lighten-70: #b3b3b3;
+lighten-80: #ccc;
+lighten-90: #e6e6e6;
+
+
+#FFFFFF (white)
+
+darken-10: #e6e6e6;
+darken-20: #ccc;
+darken-30: #b3b3b3;
+darken-40: #999;
