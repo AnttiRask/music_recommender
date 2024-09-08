@@ -169,50 +169,33 @@ server <- function(input, output, session) {
         }
     })
     
-    # # Render the artist's details as UI elements
-    # output$artistInfo <- renderUI({
-    #     # For debugging
-    #     print("Rendering artist info...")
-    #     # Ensure that recommendation is available before proceeding
-    #     req(openai_recommendation())
-    #     # Retrieve the artist details
-    #     details <- artist_details()
-    #     
-    #     if (is.null(details) || !is.list(details)) {
-    #         # Return NULL when no data is available
-    #         return(NULL)
-    #     }
-    #     
-    #     # Return artist info UI if details are available
-    #     tagList(
-    #         img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
-    #         HTML("<br><br>"),
-    #         h3(details$name),
-    #         HTML(details$info),
-    #         HTML("<br><br>"),
-    #         p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
-    #     )
-    # })
-    
-    # For Debugging, simplified artist info
+    # Render the artist's details as UI elements
     output$artistInfo <- renderUI({
-        req(openai_recommendation())  # Ensure there's a recommendation
         
+        # If there's no recommendation yet, show a placeholder image
+        if (is.null(openai_recommendation())) {
+            # Replace 'placeholder_image.png' with the path to your placeholder image
+            return(tagList(
+                img(src = "www/placeholder_image.png", alt = "Placeholder Image", height = "200px")
+            ))
+        }
+        
+        # Once there's a recommendation, show the actual artist details
         details <- artist_details()
         if (is.null(details)) {
             return(h3("No artist details available."))
         }
-        
-        # Simple rendering of artist details
+
+        # Return artist info UI if details are available
         tagList(
-            h3(details$name),
-            p(details$info),
             img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
-            p(paste("Spotify Followers:", format(details$followers, big.mark = ","))),
-            a(href = details$spotifyUrl, "Listen on Spotify", target = "_blank")
+            HTML("<br><br>"),
+            h3(details$name),
+            HTML(details$info),
+            HTML("<br><br>"),
+            p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
         )
     })
-    
     # Render the Spotify button as a UI element
     output$spotifyButton <- renderUI({
         if (is.null(spotify_url()) || !nzchar(spotify_url())) {
