@@ -175,7 +175,7 @@ server <- function(input, output, session) {
             # Add a fallback text for debugging purposes
             return(tagList(
                 h3("Placeholder Loaded"),
-                img(src = "www/placeholder_image.png", alt = "Placeholder Image", height = "200px")
+                img(src = "placeholder_image.png", alt = "Placeholder Image", height = "200px")
             ))
         }
         
