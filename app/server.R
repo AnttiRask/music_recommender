@@ -178,9 +178,9 @@ server <- function(input, output, session) {
             # return(
                 tagList(
                     img(src = "placeholder_image.png", alt = "Placeholder Image", height = "200px")
-                # )
-            )
-        }
+                )
+        #     )
+        # }
         
         # Once there's a recommendation, show the actual artist details
         # details <- artist_details()
