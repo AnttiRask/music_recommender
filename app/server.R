@@ -171,6 +171,8 @@ server <- function(input, output, session) {
     
     # Render the artist's details as UI elements
     output$artistInfo <- renderUI({
+        # For debugging
+        print("Rendering artist info...")
         # Ensure that recommendation is available before proceeding
         req(openai_recommendation())
         # Retrieve the artist details
