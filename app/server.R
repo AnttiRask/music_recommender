@@ -106,7 +106,7 @@ server <- function(input, output, session) {
             session,
             "prompt",
             value       = "",
-            placeholder = "Describe to me, in 190 characters or less, what kind of music you would like to hear."
+            placeholder = "Describe to me, in 190 characters or less, what kind of music you would like to hear. \n\nI will then recommend you an artist to listen to!"
         )
     }, 
     ignoreInit = TRUE
