@@ -170,28 +170,33 @@ server <- function(input, output, session) {
     })
     
     output$artistInfo <- renderUI({
+        # Ensure that recommendation is available before proceeding
+        req(openai_recommendation())
         # If there's no recommendation yet, show a placeholder image
         if (is.null(openai_recommendation())) {
             # Add a fallback text for debugging purposes
-            return(tagList(
-                h3("Placeholder Loaded"),
-                img(src = "placeholder_image.png", alt = "Placeholder Image", height = "200px")
-            ))
+            return(
+                tagList(
+                    img(src = "placeholder_image.png", alt = "Placeholder Image", height = "200px")
+                )
+            )
         }
         
         # Once there's a recommendation, show the actual artist details
         details <- artist_details()
+        
         if (is.null(details)) {
             return(h3("No artist details available."))
         }
         
         # Render artist information
         tagList(
-            h3(details$name),
-            p(details$info),
             img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
-            p(paste("Spotify Followers:", format(details$followers, big.mark = ","))),
-            a(href = details$spotifyUrl, "Listen on Spotify", target = "_blank")
+            HTML("<br><br>"),
+            h3(details$name),
+            HTML(details$info),
+            HTML("<br><br>"),
+            p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
         )
     })
     
