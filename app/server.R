@@ -169,13 +169,12 @@ server <- function(input, output, session) {
         }
     })
     
-    # Render the artist's details as UI elements
     output$artistInfo <- renderUI({
-        
         # If there's no recommendation yet, show a placeholder image
         if (is.null(openai_recommendation())) {
-            # Replace 'placeholder_image.png' with the path to your placeholder image
+            # Add a fallback text for debugging purposes
             return(tagList(
+                h3("Placeholder Loaded"),
                 img(src = "www/placeholder_image.png", alt = "Placeholder Image", height = "200px")
             ))
         }
@@ -185,17 +184,17 @@ server <- function(input, output, session) {
         if (is.null(details)) {
             return(h3("No artist details available."))
         }
-
-        # Return artist info UI if details are available
+        
+        # Render artist information
         tagList(
-            img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
-            HTML("<br><br>"),
             h3(details$name),
-            HTML(details$info),
-            HTML("<br><br>"),
-            p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
+            p(details$info),
+            img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
+            p(paste("Spotify Followers:", format(details$followers, big.mark = ","))),
+            a(href = details$spotifyUrl, "Listen on Spotify", target = "_blank")
         )
     })
+    
     # Render the Spotify button as a UI element
     output$spotifyButton <- renderUI({
         if (is.null(spotify_url()) || !nzchar(spotify_url())) {
