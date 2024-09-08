@@ -169,28 +169,47 @@ server <- function(input, output, session) {
         }
     })
     
-    # Render the artist's details as UI elements
+    # # Render the artist's details as UI elements
+    # output$artistInfo <- renderUI({
+    #     # For debugging
+    #     print("Rendering artist info...")
+    #     # Ensure that recommendation is available before proceeding
+    #     req(openai_recommendation())
+    #     # Retrieve the artist details
+    #     details <- artist_details()
+    #     
+    #     if (is.null(details) || !is.list(details)) {
+    #         # Return NULL when no data is available
+    #         return(NULL)
+    #     }
+    #     
+    #     # Return artist info UI if details are available
+    #     tagList(
+    #         img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
+    #         HTML("<br><br>"),
+    #         h3(details$name),
+    #         HTML(details$info),
+    #         HTML("<br><br>"),
+    #         p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
+    #     )
+    # })
+    
+    # For Debugging, simplified artist info
     output$artistInfo <- renderUI({
-        # For debugging
-        print("Rendering artist info...")
-        # Ensure that recommendation is available before proceeding
-        req(openai_recommendation())
-        # Retrieve the artist details
-        details <- artist_details()
+        req(openai_recommendation())  # Ensure there's a recommendation
         
-        if (is.null(details) || !is.list(details)) {
-            # Return NULL when no data is available
-            return(NULL)
+        details <- artist_details()
+        if (is.null(details)) {
+            return(h3("No artist details available."))
         }
         
-        # Return artist info UI if details are available
+        # Simple rendering of artist details
         tagList(
-            img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
-            HTML("<br><br>"),
             h3(details$name),
-            HTML(details$info),
-            HTML("<br><br>"),
-            p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
+            p(details$info),
+            img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
+            p(paste("Spotify Followers:", format(details$followers, big.mark = ","))),
+            a(href = details$spotifyUrl, "Listen on Spotify", target = "_blank")
         )
     })
     
