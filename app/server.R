@@ -170,34 +170,34 @@ server <- function(input, output, session) {
     })
     
     output$artistInfo <- renderUI({
-        # Ensure that recommendation is available before proceeding
-        # req(openai_recommendation())
-        # If there's no recommendation yet, show a placeholder image
-        # if (is.null(openai_recommendation())) {
-            # Add a fallback text for debugging purposes
-            # return(
+        # Ensure that recommendation has been triggered by checking if the button has been clicked
+        if (input$go == 0) {
+            return(
                 tagList(
                     img(src = "placeholder_image.png", alt = "Placeholder Image", height = "200px")
                 )
-        #     )
-        # }
+            )
+        }
+        
+        # Wait for the recommendation to be available after the button is clicked
+        req(openai_recommendation())
         
         # Once there's a recommendation, show the actual artist details
-        # details <- artist_details()
-        # 
-        # if (is.null(details)) {
-        #     return(h3("No artist details available."))
-        # }
+        details <- artist_details()
+        
+        if (is.null(details)) {
+            return(h3("No artist details available."))
+        }
         
         # Render artist information
-        # tagList(
-        #     img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
-        #     HTML("<br><br>"),
-        #     h3(details$name),
-        #     HTML(details$info),
-        #     HTML("<br><br>"),
-        #     p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
-        # )
+        tagList(
+            img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
+            HTML("<br><br>"),
+            h3(details$name),
+            HTML(details$info),
+            HTML("<br><br>"),
+            p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
+        )
     })
     
     # Render the Spotify button as a UI element
