@@ -26,7 +26,7 @@ ui <- fluidPage(
                 textAreaInput(
                     inputId     = "prompt",
                     label       = NULL,
-                    height      = "160px",
+                    height      = "200px",
                     placeholder = "Describe to me, in 190 characters or less, what kind of music you would like to hear.",
                     resize      = "none"
                 ),

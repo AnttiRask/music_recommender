@@ -171,40 +171,41 @@ server <- function(input, output, session) {
     
     # Render the artist's details as UI elements
     output$artistInfo <- renderUI({
-        # Ensure that artist details are available before proceeding
-        req(artist_details())
+        # Ensure that recommendation is available before proceeding
+        req(openai_recommendation())
         # Retrieve the artist details
         details <- artist_details()
+        
         if (is.null(details) || !is.list(details)) {
-            # If details are null or not a list, show a message
-            return("No data available.")
+            # Return NULL when no data is available
+            return(NULL)
         }
-        if (!is.null(details)) {
-            tagList(
-                img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
-                HTML("<br><br>"),
-                h3(details$name),
-                HTML(details$info),
-                HTML("<br><br>"),
-                p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
-            )
-        } else {
-            # Fallback message if details are null
-            "Artist details not available."
-        }
+        
+        # Return artist info UI if details are available
+        tagList(
+            img(src = details$imageUrl, alt = "Artist Image", height = "200px"),
+            HTML("<br><br>"),
+            h3(details$name),
+            HTML(details$info),
+            HTML("<br><br>"),
+            p(paste("Spotify Followers:", format(details$followers, big.mark = ",")))
+        )
     })
     
     # Render the Spotify button as a UI element
     output$spotifyButton <- renderUI({
-        if (!is.null(spotify_url()) && nzchar(spotify_url())) {
-            # Create an anchor tag that looks like a button if a Spotify URL is available
-            tags$a(
-                href   = spotify_url(),                # The href attribute is the Spotify URL
-                target = "_blank",                     # Opens the link in a new tab
-                class  = "button-spotify",                     # Class for CSS styling
-                icon("spotify", lib = "font-awesome"), # Spotify icon from the font-awesome library
-                "View on Spotify"                      # Button text
-            )
+        if (is.null(spotify_url()) || !nzchar(spotify_url())) {
+            return(NULL)
         }
+        
+        # Render the Spotify button only when a valid URL is available
+        tags$a(
+            href   = spotify_url(),                # The href attribute is the Spotify URL
+            target = "_blank",                     # Opens the link in a new tab
+            class  = "button-spotify",             # Class for CSS styling
+            icon("spotify", lib = "font-awesome"), # Spotify icon from the font-awesome library
+            "View on Spotify"                      # Button text
+        )
+        
     })
 }
