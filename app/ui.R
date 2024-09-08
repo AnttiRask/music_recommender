@@ -7,7 +7,7 @@ ui <- fluidPage(
 
     # The tab title and favicon
     tags$head(
-        tags$title("Music Recommender"),
+        tags$title("TuneTeller"),
         tags$link(rel = "shortcut icon", type = "image/png", href = "favicon.png")
     ),
     
@@ -18,8 +18,7 @@ ui <- fluidPage(
     div(
         class = "container",
         # The app title
-        # titlePanel(title = list(icon("spotify", lib = "font-awesome" ), "Music Recommender")),
-        titlePanel(title = "Music Recommender"),
+        titlePanel(title = "TuneTeller"),
         sidebarLayout(
             sidebarPanel(
                 # Text prompt input
@@ -27,7 +26,7 @@ ui <- fluidPage(
                     inputId     = "prompt",
                     label       = NULL,
                     height      = "200px",
-                    placeholder = "Describe to me, in 190 characters or less, what kind of music you would like to hear.",
+                    placeholder = "Describe to me, in 190 characters or less, what kind of music you would like to hear. \n\nI will then recommend you an artist to listen to!",
                     resize      = "none"
                 ),
                 # Button to get the recommendation

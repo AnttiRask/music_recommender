@@ -10,7 +10,7 @@ setAccountInfo(
 
 deployApp(
     appDir      = "app/",
-    appName     = "music-recommender",
+    appName     = "TuneTeller",
     account     = "youcanbeapirate",
     forceUpdate = TRUE
 )
